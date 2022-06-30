@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .serializers import ProductSerializer, GetProductSerializer
 from .models import Product
 from utils.mixins import SerializerByMethodMixin
@@ -16,7 +15,7 @@ class ProductView(SerializerByMethodMixin, generics.ListCreateAPIView):
     }
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(seller=self.request.user)
 
 class ProductDetailView(SerializerByMethodMixin, generics.RetrieveUpdateAPIView):
     authentication_classes = [TokenAuthentication]
