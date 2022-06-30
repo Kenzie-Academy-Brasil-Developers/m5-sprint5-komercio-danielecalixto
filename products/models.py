@@ -5,4 +5,5 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=15, decimal_places=2)
     quantity = models.IntegerField()
     is_active = models.BooleanField(default=True)
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="products")
+    
+    seller = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="products")
