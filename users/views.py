@@ -3,13 +3,28 @@ from rest_framework.views import APIView, Response, status
 
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+
+from .permissions import UpdateUserPermission, UpdateUserActivePermission, DeactivatePermission
 
 from .models import User
-from .serializers import UserSerializer, LoginSerializer
+from .serializers import UserSerializer, LoginSerializer, DeactivateSerializer
 
 class UserView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class UpdateUserView(generics.UpdateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [UpdateUserPermission, UpdateUserActivePermission]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
+class DeactivateView(generics.UpdateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [DeactivatePermission]
+    queryset = User.objects.all()
+    serializer_class = DeactivateSerializer
 
 class ListNumUsersView(generics.ListAPIView):
     queryset = User.objects.all()
