@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from users.models import User
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):    
     class Meta:
         model = User
         fields = ['email', 'password', 'first_name', 'last_name', 'is_seller', 'date_joined', 'is_active']
@@ -17,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+
 
 class DeactivateSerializer(serializers.ModelSerializer):
     class Meta:
