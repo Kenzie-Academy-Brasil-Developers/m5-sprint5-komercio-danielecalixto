@@ -10,7 +10,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     updated_at = models.DateTimeField(default=timezone.now)
-    is_seller = models.BooleanField(default=False)
+    is_seller = models.BooleanField()
     is_active = models.BooleanField(default=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'is_seller']
