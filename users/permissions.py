@@ -16,3 +16,13 @@ class UpdateUserActivePermission(permissions.BasePermission):
 class DeactivatePermission(permissions.BasePermission):
     def has_permission(self, request, view):
         return request.user.is_superuser
+
+class CreateUserActivePermission(permissions.BasePermission):
+    message = "You can't assign is_active property"
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if 'is_active' in request.data:
+            return False
+        return True
