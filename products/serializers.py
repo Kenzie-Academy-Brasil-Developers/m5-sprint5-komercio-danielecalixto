@@ -2,6 +2,8 @@ from rest_framework import serializers
 
 from .models import Product
 from users.models import User
+from rest_framework.views import status, Response
+from django.forms import ValidationError
 
 class SellerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,6 +17,11 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'description', 'price', 'quantity', 'is_active', 'seller']
         extra_kwargs = {'is_active': {'required': False}}
+
+    def validate_quantity(self, value):
+        if value<0:
+            raise ValidationError("Ensure this value is greater than 0")
+        return value
 
     def create(self, validated_data):
         seller = validated_data.pop('seller')
